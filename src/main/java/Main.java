@@ -1,14 +1,15 @@
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import solver.Maybe;
 import solver.Solver;
 import solver.SolverFactory;
+
+import java.util.HashMap;
 
 public class Main extends Application {
     public static void main(String[] args) {
@@ -68,11 +69,53 @@ public class Main extends Application {
         });
 
 
+        send.setOnAction(event -> {
+            HashMap<String, String> login = gmailLoginPopupWindow(primaryStage);
+            login.get("username");
+            login.get("password");
 
+        });
 
 
         primaryStage.setScene(new Scene(button_box));
         primaryStage.setTitle("White Elephant");
         primaryStage.show();
     }
+
+    private HashMap<String, String> gmailLoginPopupWindow(Stage primaryStage) {
+        VBox layout = new VBox();
+        layout.setPadding(new Insets(10));
+        layout.setSpacing(5);
+
+        layout.getChildren().add(new Label("GMail Login"));
+
+        TextField username = new TextField("username@gmail.com");
+        username.setPromptText("username");
+        layout.getChildren().add(username);
+
+        PasswordField password = new PasswordField();
+        password.setPromptText("password");
+        layout.getChildren().add(password);
+
+        Button login = new Button("Login");
+        layout.getChildren().add(login);
+
+        Stage popupStage = new Stage();
+        popupStage.initOwner(primaryStage);
+        popupStage.initModality(Modality.WINDOW_MODAL);
+        popupStage.setScene(new Scene(layout));
+
+        login.setOnAction(e -> popupStage.close());
+        username.positionCaret("username".length());
+        username.selectHome();
+
+        popupStage.showAndWait();
+
+
+        HashMap<String, String> credentials = new HashMap<>();
+        credentials.put("username", username.getText());
+        credentials.put("password", password.getText());
+        return credentials;
+    }
+
 }
