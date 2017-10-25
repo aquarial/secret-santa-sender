@@ -1,25 +1,25 @@
 public class Maybe<A> {
 
-    boolean isError;
+    A result;
+    boolean hadError;
     String errorMessage;
-    A result = null;
 
 
     Maybe(A item) {
-        this.isError = false;
+        this.hadError = false;
         this.errorMessage = null;
         this.result = item;
     }
 
     @SuppressWarnings("unused")
-    Maybe(String isError, String errorMessage) {
-        this.isError = true;
+    Maybe(String hadError, String errorMessage) {
+        this.hadError = true;
         this.errorMessage = errorMessage;
         this.result = null;
     }
 
     @Override
     public String toString() {
-        return "Maybe[ isError=" + isError + ", errMessage=" + errorMessage + ", result=" + result + "]";
+        return "Maybe[ hadError=" + hadError + ", errMessage=" + errorMessage + ", result=" + result + "]";
     }
 }
