@@ -24,7 +24,7 @@ public class Solver {
         Collections.shuffle(nodes);
 
         int fst = 0;
-        for (int round = 0; round < nodes.size() * 2; round++) {
+        for (int round = 0; round < nodes.size() * nodes.size(); round++) {
             int snd = (fst + 1) % nodes.size();
             int thr = (fst + 2) % nodes.size();
             if (nodes.get(fst).groupID == nodes.get(snd).groupID) {
