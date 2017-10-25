@@ -22,6 +22,6 @@ public class Maybe<A> {
 
     @Override
     public String toString() {
-        return "solver.Maybe[ hadError=" + hadError + ", errMessage=" + errorMessage + ", result=" + result + "]";
+        return "Maybe[ hadError=" + hadError + ", errMessage=" + errorMessage + ", result=" + result + "]";
     }
 }
