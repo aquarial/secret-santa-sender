@@ -1,1 +1,20 @@
-# Rename this file to "data.txt" so the program can use it
+# Lines starting with "#" are ignored
+#
+# A Data entry looks like: "groupID, name, email"
+#
+
+0, A person, aperson@email.com
+0, B person, bperson@email.com
+
+1, C 3rd person, cperson@email.com
+
+2, D last member, dperson@email.com
+
+# The program will find routes
+# A C B D A
+# A D B C A
+#
+# These are the only two gift routes through the four players that doesn't make anyone give a gift
+#     to someone in their group.
+#
+# Edit this file with the real data, then rename it to "data.txt"
