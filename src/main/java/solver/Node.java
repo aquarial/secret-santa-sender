@@ -1,4 +1,6 @@
-public class Node {
+package solver;
+
+class Node {
     public int groupID;
     public String name;
     public String email;
@@ -6,6 +8,6 @@ public class Node {
 
     @Override
     public String toString() {
-        return "\nNode[ groupid="+groupID + ", name=" +name + ", email=" + email + "]";
+        return "\nsolver.Node[ groupid="+groupID + ", name=" +name + ", email=" + email + "]";
     }
 }

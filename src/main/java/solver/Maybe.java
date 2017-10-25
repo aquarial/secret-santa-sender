@@ -1,8 +1,10 @@
+package solver;
+
 public class Maybe<A> {
 
-    A result;
-    boolean hadError;
-    String errorMessage;
+    public A result;
+    public boolean hadError;
+    public String errorMessage;
 
 
     Maybe(A item) {
@@ -20,6 +22,6 @@ public class Maybe<A> {
 
     @Override
     public String toString() {
-        return "Maybe[ hadError=" + hadError + ", errMessage=" + errorMessage + ", result=" + result + "]";
+        return "solver.Maybe[ hadError=" + hadError + ", errMessage=" + errorMessage + ", result=" + result + "]";
     }
 }

@@ -1,3 +1,5 @@
+package solver;
+
 import java.util.*;
 
 public class Solver {
@@ -15,8 +17,10 @@ public class Solver {
         nodes.set(b, tmp);
     }
 
+    /**
+     * Internally computes a possible gift exchange route
+     */
     public void generateSolution() {
-
         Collections.shuffle(nodes);
 
         int fst = 0;
@@ -28,12 +32,22 @@ public class Solver {
             }
             fst = snd;
         }
+    }
 
+    /**
+     * @return If the gift exchange has a group sending to itself
+     */
+    public boolean validSolution() {
+        for (int i = 0; i < nodes.size(); i++) {
+            if (nodes.get(i).groupID == nodes.get((i + 1) % nodes.size()).groupID)
+                return false;
+        }
+        return true;
     }
 
 //    VALIDATE IF THE GIFT EXCHANGE ALGORITHM IS FAIR
 //
-//    private static void validateSolution(List<Node> nodes) {
+//    private static void validateSolution(List<solver.Node> nodes) {
 //        HashMap<String, Integer> solutions = new HashMap<>();
 //        for (int round = 0; round < 100000; round++) {
 //            String key = nodes.stream().map(node -> node.groupID).collect(toList()).toString();
