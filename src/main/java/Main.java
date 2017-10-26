@@ -6,6 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.hazlewood.connor.bottema.emailaddress.EmailAddressValidator;
 import solver.GiftRelation;
 import solver.Maybe;
 import solver.Solver;
@@ -148,6 +149,12 @@ public class Main extends Application {
         username.selectHome();
 
         popupStage.showAndWait();
+
+        while (!EmailAddressValidator.isValid(username.getText() + "@gmail.com")) {
+            new Alert(Alert.AlertType.ERROR, "Invalid email username (just the part before the @)").show();
+            username.setStyle("-fx-background: #ff705a");
+            popupStage.showAndWait();
+        }
 
 
         HashMap<String, String> credentials = new HashMap<>();
