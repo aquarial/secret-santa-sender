@@ -49,7 +49,10 @@ public class Main extends Application {
 
             Maybe<Solver> ms = SolverFactory.parseSolver("data.txt");
             if (ms.hadError) {
-                new Alert(Alert.AlertType.ERROR, ms.errorMessage).showAndWait();
+                Alert err = new Alert(Alert.AlertType.ERROR, ms.errorMessage);
+                err.setResizable(true);
+                err.setWidth(400);
+                err.showAndWait();
                 solver = null;
             } else {
                 solver = ms.result;
@@ -62,11 +65,15 @@ public class Main extends Application {
             compute.setText("Recompute");
             solver.generateSolution();
             if (!solver.validSolution()) {
-                new Alert(Alert.AlertType.WARNING, "Someone in the gift exchange\n" +
+                Alert warning = new Alert(Alert.AlertType.WARNING, "Someone in the gift exchange\n" +
                         "will give to a person in their family!\n" +
                         "\n" +
                         "Recompute a solution or\n" +
-                        "change the groupings in data.txt").showAndWait();
+                        "change the groupings in data.txt");
+
+                warning.setResizable(true);
+                warning.setWidth(400);
+                warning.showAndWait();
             }
         });
 
