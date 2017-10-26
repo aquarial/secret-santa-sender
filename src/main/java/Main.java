@@ -1,10 +1,12 @@
 import javafx.application.Application;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import solver.GiftRelation;
 import solver.Maybe;
 import solver.Solver;
 import solver.SolverFactory;
@@ -70,10 +72,39 @@ public class Main extends Application {
 
 
         send.setOnAction(event -> {
-            HashMap<String, String> login = gmailLoginPopupWindow(primaryStage);
-            login.get("username");
-            login.get("password");
+            send.setDisable(true);
+            compute.setDisable(true);
+            load.setDisable(true);
+            send.setText("Sending...");
 
+            HashMap<String, String> login = gmailLoginPopupWindow(primaryStage);
+            Sender sender = new Sender(login.get("username"), login.get("password"));
+
+            final Task task = new Task<String>() {
+                @Override
+                public String call() {
+                    for (GiftRelation giftRelation : solver.giftingPairs()) {
+                        sender.sendEmail(giftRelation.giver_email, giftRelation.receiver_name);
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            return "ERROR: interupted";
+                        }
+                    }
+                    return "SUCCESS";
+                }
+            };
+
+            task.setOnSucceeded(result -> {
+                send.setDisable(false);
+                compute.setDisable(false);
+                load.setDisable(false);
+                send.setText("Send");
+            });
+
+            Thread t = new Thread(task);
+            t.setDaemon(true);
+            t.start();
         });
 
 
