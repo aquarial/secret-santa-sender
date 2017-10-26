@@ -31,7 +31,7 @@ public class Sender {
 
         String text = "Hi!\n\n" + from_name + " has signed you up for a Secret Santa Gift exchange. " +
                 "You will be bringing a gift for... " + gift_target_name + ". ";
-        String subject = "Testing";
+        String subject = "Secret Santa Gift Exchange";
 
         Email mail = new EmailBuilder()
                 .from(from_name, from)
