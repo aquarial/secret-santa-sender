@@ -24,12 +24,12 @@ public class Main extends Application {
         button_box.setSpacing(20);
         button_box.setPadding(new Insets(10));
 
-        Button load = new Button("Load");
+        Button load = new Button("Load text data");
         load.setTooltip(new Tooltip("Load text file for participant data"));
         load.setPrefSize(200, 50);
         button_box.getChildren().add(load);
 
-        Button compute = new Button("Compute");
+        Button compute = new Button("Compute Secret Santas");
         compute.setTooltip(new Tooltip("Compute a white elephant gift cycle"));
         compute.setDisable(true);
         compute.setPrefSize(200, 50);
@@ -87,9 +87,9 @@ public class Main extends Application {
         layout.setPadding(new Insets(10));
         layout.setSpacing(5);
 
-        layout.getChildren().add(new Label("GMail Login"));
+        layout.getChildren().add(new Label("Your GMail Login"));
 
-        TextField username = new TextField("username@gmail.com");
+        TextField username = new TextField("username");
         username.setPromptText("username");
         layout.getChildren().add(username);
 
