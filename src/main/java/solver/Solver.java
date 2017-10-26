@@ -1,5 +1,8 @@
 package solver;
 
+import com.sun.corba.se.spi.ior.iiop.GIOPVersion;
+import javafx.util.Pair;
+
 import java.util.*;
 
 public class Solver {
@@ -43,6 +46,14 @@ public class Solver {
                 return false;
         }
         return true;
+    }
+
+    public List<GiftRelation> giftingPairs() {
+        List<GiftRelation> pairs = new ArrayList<>(nodes.size());
+        for (int i = 0; i < nodes.size(); i++)
+            pairs.add(new GiftRelation(nodes.get(i).email, nodes.get((i + 1) % nodes.size()).name));
+
+        return pairs;
     }
 
 //    VALIDATE IF THE GIFT EXCHANGE ALGORITHM IS FAIR
