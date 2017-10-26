@@ -19,7 +19,7 @@ public class Sender {
     private Mailer mailer;
 
 
-    public Sender(String username, String password) {
+    Sender(String username, String password) {
         this.from = username + "@gmail.com";
         from_name = "Santa";
         mailer = new Mailer("smtp.gmail.com", 465, username, password, TransportStrategy.SMTP_SSL);
