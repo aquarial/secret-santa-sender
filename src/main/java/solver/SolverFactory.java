@@ -1,5 +1,7 @@
 package solver;
 
+import org.hazlewood.connor.bottema.emailaddress.EmailAddressValidator;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
@@ -38,7 +40,15 @@ public class SolverFactory {
                 parsed.groupID = Integer.parseInt(info[0]);
                 parsed.name = info[1];
                 parsed.email = info[2];
-                people.add(parsed);
+
+
+                if (EmailAddressValidator.isValid(parsed.email)) {
+                    people.add(parsed);
+                } else {
+                    parseFailure = true;
+                    failedParses.add(line + " invalid email!");
+                }
+
             } catch (Exception ignored) {
                 parseFailure = true;
                 failedParses.add(line);
