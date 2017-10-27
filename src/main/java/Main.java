@@ -13,6 +13,7 @@ import solver.Solver;
 import solver.SolverFactory;
 
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Main extends Application {
     public static void main(String[] args) {
@@ -86,20 +87,24 @@ public class Main extends Application {
             send.setText("Sending...");
 
             HashMap<String, String> login = gmailLoginPopupWindow(primaryStage);
-            Sender sender = new Sender(login.get("username"), login.get("password"));
 
-            final Task task = new Task<String>() {
+
+            final Task<String> task = new Task<String>() {
                 @Override
                 public String call() {
-                    for (GiftRelation giftRelation : solver.giftingPairs()) {
-                        sender.sendEmail(giftRelation.giver_email, giftRelation.receiver_name);
-                        try {
-                            Thread.sleep(500);
-                        } catch (InterruptedException e) {
-                            return "ERROR: interupted";
+
+                    if (login != null) {
+                        Sender sender = new Sender(login.get("username"), login.get("password"));
+                        for (GiftRelation giftRelation : solver.giftingPairs()) {
+                            sender.sendEmail(giftRelation.giver_email, giftRelation.receiver_name);
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException e) {
+                                return null;
+                            }
                         }
                     }
-                    return "SUCCESS";
+                    return null;
                 }
             };
 
@@ -144,23 +149,26 @@ public class Main extends Application {
         popupStage.initModality(Modality.WINDOW_MODAL);
         popupStage.setScene(new Scene(layout));
 
-        login.setOnAction(e -> popupStage.close());
         username.positionCaret("username".length());
         username.selectHome();
 
+        AtomicReference<HashMap<String, String>> credentials = new AtomicReference<>(null);
+        login.setOnAction(e -> {
+            if (EmailAddressValidator.isValid(username.getText() + "@gmail.com")) {
+                credentials.set(new HashMap<>());
+                credentials.get().put("username", username.getText());
+                credentials.get().put("password", password.getText());
+                popupStage.close();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Invalid email username (just the part before the @)").show();
+                username.setStyle("-fx-background: #ff705a");
+                credentials.set(null);
+            }
+        });
+
         popupStage.showAndWait();
 
-        while (!EmailAddressValidator.isValid(username.getText() + "@gmail.com")) {
-            new Alert(Alert.AlertType.ERROR, "Invalid email username (just the part before the @)").show();
-            username.setStyle("-fx-background: #ff705a");
-            popupStage.showAndWait();
-        }
-
-
-        HashMap<String, String> credentials = new HashMap<>();
-        credentials.put("username", username.getText());
-        credentials.put("password", password.getText());
-        return credentials;
+        return credentials.get();
     }
 
 }
