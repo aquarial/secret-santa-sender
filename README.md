@@ -2,6 +2,8 @@
 
 Sends emails to everyone in a secret santa gift exchange.
 
+![First look at startup shows "Load text data", "Compute Secret Santas", and "Send" buttons](./res/init.png)
+
 Parses a data file in the format `groupid, name, email`.
 
 ```
@@ -35,7 +37,6 @@ Loop achieved.
 
 Uses your gmail login to send emails through smtp (SSL secured).
 
-![First look at startup shows "Load text data", "Compute Secret Santas", and "Send" buttons](./res/init.png)
 ![After loading, computing, and sending, a popup asks you to fill in your gmail login info](./res/sending.png)
 
 ##### Todo
